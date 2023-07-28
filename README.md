@@ -2,7 +2,7 @@
 A Hypersonic Facility Modelling Code
 
 ### Notes
-hfmc utilises the [gdtk](https://gdtk.uqcloud.net/) and the [Eilmer](https://gdtk.uqcloud.net/docs/eilmer/about/) CFD capability to model hypersonic ground test facilitity in high fidelity in 1D or 2D-axisymmetric models.
+hfmc utilises the [gdtk](https://gdtk.uqcloud.net/) and the [Eilmer](https://gdtk.uqcloud.net/docs/eilmer/about/) CFD capability to model hypersonic ground test facilitity in high fidelity in 1D or 2D-axisymmetric models. Using the power of the compressible flow functionality implemented in the gdtk, hfmc can model everything from supersonic shock tubes to hypersonic expansion tube facilities.
 
 ### Setup
 1. Clone the repository.
