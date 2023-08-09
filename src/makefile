@@ -10,11 +10,8 @@ INSTALL_DIR ?= $(HOME)/hfmcinst
 install:
 	@echo "Installing hfmc in directory $(INSTALL_DIR). Be sure this path is added to the PYTHONPATH (see the README)."
 
-	- mkdir -p $(INSTALL_DIR)/lib
-	cp *.py $(INSTALL_DIR)/lib
-
-	- mkdir -p $(INSTALL_DIR)/share
-	cp gases/*.lua $(INSTALL_DIR)/share
+	- mkdir -p $(INSTALL_DIR)/lib/hfmc
+	cp *.py $(INSTALL_DIR)/lib/hfmc
 
 	@echo "\n ---- hfmc is now installed ----"
 
