@@ -29,9 +29,6 @@ def buildGasModel(species_list, reaction_schemes) -> None:
 
     #build the chemistry/reacting schemes with gdtk format
 
-    
-
-
     return None
 
 # small file writer wrapper function
@@ -40,6 +37,3 @@ def writeln(file, line):
     file.write(line+"\n")
 
     return None
-
-#test
-buildGasModel(["He", "O2", "O", "N2", "N", "N+", "e-"])

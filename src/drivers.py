@@ -18,8 +18,7 @@ hfmc_drivers_dictionary = {
         "T_4i" : 300,
         "gamma_4_polytropic" : 1.61,
         "V_4i" : 0.2371, #[m^3] initial driver volume, pre-compression
-        #"molef_He" : 100.0, #[mole fraction]
-        #"molef_Ar" : 0.0, #[mole fraction]
+        "molef_4i" : {"He" : 1.0, "Ar" : 0.0}, #molef
         "D_orifice" : 65/1000, #[m]
         "gm_4" : "thermally-perfect-he-ar-gas-model" #100% He by default
     },

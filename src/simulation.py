@@ -9,6 +9,7 @@ from copy import deepcopy
 from hfmc.facilities import *
 from hfmc.drivers import *
 from hfmc.pretty import *
+from hfmc.gasmodels import *
 
 # a small interface function for creating the simulation flass
 def newSimulation(simulation_name, facility, mode, fill_conditions, driver_condition, prove_convergence = False, further_refinement_factors = [], parallelise_refinement_proof = True):
@@ -83,7 +84,14 @@ class Simulation():
 
 
         # has the user provided a valid driver dictionary or valid dictionary name?
-
+        if type(self.driver_condition) == type(dict):
+            #assume the user has supplied their own...
+            inform("A user-provided dictionary is being used as the driver definition.", "update")
+        elif self.driver_condition in hfmc_drivers_dictionary:
+            #make teh self.driver_condition be the dictionary rather than the name of the driver
+            self.driver_condition = deepcopy(hfmc_drivers_dictionary[self.driver_condition])
+        else:
+            inform("The driver condition given must be a valid name or a dictionary definition", "error", True)
 
         return None
 
@@ -93,6 +101,52 @@ class Simulation():
 
     def initialise(self) -> None:
 
+        # 
+        # Prepare the gas model and chemistry files with the gdtk
+        # 
 
+        #get the species in the driver gas...
+        for item_name in self.driver_condition:
+            if "molef" in item_name:
+                species_driver = [sp_name for sp_name in self.driver_condition[item_name]]
+                break
+
+        # get the species in all gas slugs...
+        species_driven_slugs = []
+
+        for item_name in self.mode:
+            #if the part of the tunnel is a driven part, get the species in its initial fill condition
+            if self.mode[item_name]["style"] == "driven-tube":
+                #note the state_id
+                state_id = self.mode[item_name]["initial-identity"]
+
+                #add each element to the driven list of species
+                for element_name in self.fill_conditions:
+                    if "molef" in element_name:
+                        for sp_name in self.fill_conditions[element_name]:
+
+                            species_driven_slugs = [sp_name for sp_name in self.fill_conditions[element_name]]
+
+        #a union set of all the species in all fill conditions...
+        specieis_all = {sp for sp in species_driven_slugs}.union({sp for sp in species_driver})
+
+        #
+
+
+
+
+        # build the gas model and chemistry...
+        #buildGasModel()
+        #buildChemicalScheme()
+
+        # 
+        # Write the Eilmer simulation
+        #
+
+
+
+        #
+        # Prepare the Eilmer simulation
+        #
 
         return
