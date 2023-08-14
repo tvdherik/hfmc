@@ -12,11 +12,11 @@ from hfmc.pretty import *
 from hfmc.gasmodels import *
 
 # a small interface function for creating the simulation flass
-def newSimulation(simulation_name, facility, mode, fill_conditions, driver_condition, prove_convergence = False, further_refinement_factors = [], parallelise_refinement_proof = True):
+def newSimulation(simulation_name, facility, mode, driver_condition, fill_conditions, chemical_models, prove_convergence = False, further_refinement_factors = [], parallelise_refinement_proof = True, exclude_reactions = []):
 
     # Build and return a class with these inputs.
 
-    return Simulation(simulation_name, facility, mode, fill_conditions, driver_condition, prove_convergence, further_refinement_factors, parallelise_refinement_proof)
+    return Simulation(simulation_name, facility, mode, driver_condition, fill_conditions, chemical_models, prove_convergence, further_refinement_factors, parallelise_refinement_proof, exclude_reactions)
 
 #
 # the main simulation class...
@@ -32,7 +32,7 @@ class Simulation():
     # init function for the simulation class
     #
 
-    def __init__(self, simulation_name, facility, mode, fill_conditions, driver_condition, prove_convergence, further_refinement_factors, parallelise_refinement_proof) -> None:
+    def __init__(self, simulation_name, facility, mode, driver_condition, fill_conditions, chemical_models, prove_convergence, further_refinement_factors, parallelise_refinement_proof, exclude_reactions) -> None:
 
         # initialisations
         self.name = simulation_name
@@ -43,6 +43,8 @@ class Simulation():
         self.prove_convergence = prove_convergence
         self.further_refinement_factors = further_refinement_factors
         self.parallelise_refinement_proof = parallelise_refinement_proof
+        self.chemical_models = chemical_models
+        self.exclude_reactions = exclude_reactions
 
         # input checking
         # facility allowed?
@@ -123,21 +125,23 @@ class Simulation():
                 #add each element to the driven list of species
                 for element_name in self.fill_conditions:
                     if "molef" in element_name:
-                        for sp_name in self.fill_conditions[element_name]:
+                        species_driven_slugs = [sp_name for sp_name in self.fill_conditions[element_name]]
 
-                            species_driven_slugs = [sp_name for sp_name in self.fill_conditions[element_name]]
+        # a union set of all the species in all fill conditions...
+        species_all = {sp for sp in species_driven_slugs}.union({sp for sp in species_driver})
 
-        #a union set of all the species in all fill conditions...
-        specieis_all = {sp for sp in species_driven_slugs}.union({sp for sp in species_driver})
+        # what're the reaction scheme/s?
 
-        #
-
-
-
+        if (len(self.chemical_models) == 0) :
+            self.chemical_models = "thermally-perfect"
+            inform("No chemical model defined. Assuming all gases are thermally perfect. Non-reacting.")
 
         # build the gas model and chemistry...
-        #buildGasModel()
-        #buildChemicalScheme()
+        possible_flow_species = buildChemicalScheme(self.chemical_models)
+
+        # union the possible flow species from reaction schemes with those given by the above
+        self.chemicals = sorted(species_all.union(possible_flow_species))
+        buildGasModel(self.chemicals)
 
         # 
         # Write the Eilmer simulation
@@ -150,3 +154,16 @@ class Simulation():
         #
 
         return
+    
+#
+# A universal class for make building of eilmer geometry quick and easy
+#
+
+class FluidDomainElement():
+    def __init__(self, x_left, x_right, cpm) -> None:
+
+        self.cpm = cpm
+        self.x_left = x_left
+        self.x_right = x_right
+
+        return None

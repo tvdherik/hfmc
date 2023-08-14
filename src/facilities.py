@@ -8,11 +8,9 @@ hfmc_facilities_dictionary = {
 
     #
     # 
-    # 
     #       X2 FACILITY..............
     # 
     # 
-    #  
 
     "x2" : {
 

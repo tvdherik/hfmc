@@ -1,0 +1,63 @@
+-- 
+-- Automatically generated chemistry/reactions file by hfmc. 
+-- 
+
+
+Config{
+    --Gupta validity range is up to 30,000 Kelvin
+    tempLimits = {lower=300.0, upper=30000.0},
+    tightTempCoupling = true,
+    odeStep = {method='rkf', errTol=1.0e-5}
+}
+    
+
+Reaction{
+    'O2 + M <=> O + O + M',
+    fr={'Arrhenius', A=3.610e+18, n=-1.00, C=59400.00},
+    br={'Arrhenius', A=3.010e+15, n=-0.50, C=0.0},
+    label='r1',
+    efficiencies={O2=9.0, N2=2.0, O=25.0, N=1.0, NO=1.0, ['NO+']=0.0, ['O2+']=0.0, ['N2+']=0.0, ['O+']=0.0, ['N+']=0.0, ['e-']=0.0}
+}
+        
+
+Reaction{
+    'N2 + M <=> N + N + M',
+    fr={'Arrhenius', A=1.920e+17, n=-0.50, C=113100.00},
+    br={'Arrhenius', A=1.090e+16, n=-0.50, C=0.0},
+    label='r2',
+    efficiencies={O2=1.0, N2=2.5, O=1.0, N=0.0, NO=1.0, ['NO+']=0.0, ['O2+']=0.0, ['N2+']=0.0, ['O+']=0.0, ['N+']=0.0, ['e-']=0.0}
+}
+        
+
+Reaction{
+   'N2 + N <=> N + N + N',
+   fr={'Arrhenius', A=4.150e+22, n=-1.50, C=113100.00},
+   br={'Arrhenius', A=2.320e+21, n=-1.50, C=0.0},
+   label='r3'
+}        
+        
+
+Reaction{
+   'NO + M <=> N + O + M',
+   fr={'Arrhenius', A=3.970e+20, n=-1.50, C=75600.00},
+   br={'Arrhenius', A=1.010e+20, n=-1.50, C=0.0},
+   label='r4',
+   efficiencies={O2=1.0, N2=1.0, O=20.0, N=20.0, NO=20.0, ['NO+']=0.0, ['O2+']=0.0, ['N2+']=0.0, ['O+']=0.0, ['N+']=0.0, ['e-']=0.0}
+}
+        
+
+Reaction{
+   'NO + O <=> O2 + N',
+   fr={'Arrhenius', A=3.180e+09, n=1.00, C=19700.00},
+   br={'Arrhenius', A=9.630e+11, n=0.50, C=3600.0},
+   label='r5'
+}
+        
+
+Reaction{
+   'N2 + O <=> NO + N',
+   fr={'Arrhenius', A=6.750e+13, n=0.00, C=37500.00},
+   br={'Arrhenius', A=1.500e+13, n=0.00, C=0.0},
+   label='r6'
+}
+        

@@ -20,13 +20,15 @@ fill_dictionary = {
     "molef_5" : {"N2" : 0.8, "O2" : 0.2},
 }
 
-chem_models = ["Gupta1990-5sp"]
+chem_model = ["Gupta1990-5sp"]
 
 # create the simulation"He" : 1.0, "Ar" : 0.0
-sim = newSimulation("x2-sim-test", "x2", "expansion-tube", fill_dictionary, "x2-lwp-2.5mm-100He-0Ar-isentropic")
+sim = newSimulation("x2-sim-test", "x2", "expansion-tube", "x2-lwp-2.5mm-100He-0Ar-isentropic", fill_dictionary, chem_model)
 
 # initialise the simulation
 sim.initialise()
+
+print(sim.chemicals)
 
 # execute the simulation
 #sim.execute()
