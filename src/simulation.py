@@ -90,7 +90,7 @@ class Simulation():
             #assume the user has supplied their own...
             inform("A user-provided dictionary is being used as the driver definition.", "update")
         elif self.driver_condition in hfmc_drivers_dictionary:
-            #make teh self.driver_condition be the dictionary rather than the name of the driver
+            #make the self.driver_condition be the dictionary rather than the name of the driver
             self.driver_condition = deepcopy(hfmc_drivers_dictionary[self.driver_condition])
         else:
             inform("The driver condition given must be a valid name or a dictionary definition", "error", True)
@@ -120,7 +120,7 @@ class Simulation():
             #if the part of the tunnel is a driven part, get the species in its initial fill condition
             if self.mode[item_name]["style"] == "driven-tube":
                 #note the state_id
-                state_id = self.mode[item_name]["initial-identity"]
+                #state_id = self.mode[item_name]["initial-identity"]
 
                 #add each element to the driven list of species
                 for element_name in self.fill_conditions:
@@ -143,27 +143,58 @@ class Simulation():
         self.chemicals = sorted(species_all.union(possible_flow_species))
         buildGasModel(self.chemicals)
 
+        
+        #
+        # Process the geometry... (make substitutions and ensure no perfect steps)
+        #
+
+
+        self.substituteOrificeGeometry()
+        self.substituteDriverLength()
+
+        #this must be run after all geometry is substituted.
+        self.removePerfectSteps()
+
+
         # 
         # Write the Eilmer simulation
         #
 
 
+        with open("sim.lua", 'w') as sim_file:
+        
+            #setInitialEilmerConfig(sim_file)
+            #setInitialStates(sim_file)
 
-        #
-        # Prepare the Eilmer simulation
-        #
+            #lose structure of block building...
+
+            #for coordinate in geom...
+            #   for (id, coord) enumerate(geometry list of coords)
+            #       gasblock_expression = buildGasBlock(given coord1 and coord2, id)
+            #        writeln(sim_file, gasblock expression)
+            #
+            #
+
+
+            #setFinalEilmerConfiguation()
+
+            pass
 
         return
     
-#
-# A universal class for make building of eilmer geometry quick and easy
-#
 
-class FluidDomainElement():
-    def __init__(self, x_left, x_right, cpm) -> None:
+    #
+    # Geometry Functionality
+    #
 
-        self.cpm = cpm
-        self.x_left = x_left
-        self.x_right = x_right
+    def substituteDriverLength():
+
+        return None
+    
+    def substituteOrificeGeometry():
+
+        return None
+    
+    def removePerfectSteps():
 
         return None

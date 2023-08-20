@@ -1,21 +1,6 @@
 WARNING: One of the species given in the efficiencies list
 is NOT one of the species in the gas model.
-The efficiency for: 	N2+	 will be skipped.
-This occurred for reaction number: 	1
-label: 	r1
-WARNING: One of the species given in the efficiencies list
-is NOT one of the species in the gas model.
-The efficiency for: 	N+	 will be skipped.
-This occurred for reaction number: 	1
-label: 	r1
-WARNING: One of the species given in the efficiencies list
-is NOT one of the species in the gas model.
-The efficiency for: 	e-	 will be skipped.
-This occurred for reaction number: 	1
-label: 	r1
-WARNING: One of the species given in the efficiencies list
-is NOT one of the species in the gas model.
-The efficiency for: 	NO+	 will be skipped.
+The efficiency for: 	O2+	 will be skipped.
 This occurred for reaction number: 	1
 label: 	r1
 WARNING: One of the species given in the efficiencies list
@@ -25,27 +10,27 @@ This occurred for reaction number: 	1
 label: 	r1
 WARNING: One of the species given in the efficiencies list
 is NOT one of the species in the gas model.
-The efficiency for: 	O2+	 will be skipped.
+The efficiency for: 	NO+	 will be skipped.
+This occurred for reaction number: 	1
+label: 	r1
+WARNING: One of the species given in the efficiencies list
+is NOT one of the species in the gas model.
+The efficiency for: 	e-	 will be skipped.
+This occurred for reaction number: 	1
+label: 	r1
+WARNING: One of the species given in the efficiencies list
+is NOT one of the species in the gas model.
+The efficiency for: 	N+	 will be skipped.
 This occurred for reaction number: 	1
 label: 	r1
 WARNING: One of the species given in the efficiencies list
 is NOT one of the species in the gas model.
 The efficiency for: 	N2+	 will be skipped.
-This occurred for reaction number: 	2
-label: 	r2
+This occurred for reaction number: 	1
+label: 	r1
 WARNING: One of the species given in the efficiencies list
 is NOT one of the species in the gas model.
-The efficiency for: 	N+	 will be skipped.
-This occurred for reaction number: 	2
-label: 	r2
-WARNING: One of the species given in the efficiencies list
-is NOT one of the species in the gas model.
-The efficiency for: 	e-	 will be skipped.
-This occurred for reaction number: 	2
-label: 	r2
-WARNING: One of the species given in the efficiencies list
-is NOT one of the species in the gas model.
-The efficiency for: 	NO+	 will be skipped.
+The efficiency for: 	O2+	 will be skipped.
 This occurred for reaction number: 	2
 label: 	r2
 WARNING: One of the species given in the efficiencies list
@@ -55,27 +40,27 @@ This occurred for reaction number: 	2
 label: 	r2
 WARNING: One of the species given in the efficiencies list
 is NOT one of the species in the gas model.
-The efficiency for: 	O2+	 will be skipped.
+The efficiency for: 	NO+	 will be skipped.
+This occurred for reaction number: 	2
+label: 	r2
+WARNING: One of the species given in the efficiencies list
+is NOT one of the species in the gas model.
+The efficiency for: 	e-	 will be skipped.
+This occurred for reaction number: 	2
+label: 	r2
+WARNING: One of the species given in the efficiencies list
+is NOT one of the species in the gas model.
+The efficiency for: 	N+	 will be skipped.
 This occurred for reaction number: 	2
 label: 	r2
 WARNING: One of the species given in the efficiencies list
 is NOT one of the species in the gas model.
 The efficiency for: 	N2+	 will be skipped.
-This occurred for reaction number: 	4
-label: 	r4
+This occurred for reaction number: 	2
+label: 	r2
 WARNING: One of the species given in the efficiencies list
 is NOT one of the species in the gas model.
-The efficiency for: 	N+	 will be skipped.
-This occurred for reaction number: 	4
-label: 	r4
-WARNING: One of the species given in the efficiencies list
-is NOT one of the species in the gas model.
-The efficiency for: 	e-	 will be skipped.
-This occurred for reaction number: 	4
-label: 	r4
-WARNING: One of the species given in the efficiencies list
-is NOT one of the species in the gas model.
-The efficiency for: 	NO+	 will be skipped.
+The efficiency for: 	O2+	 will be skipped.
 This occurred for reaction number: 	4
 label: 	r4
 WARNING: One of the species given in the efficiencies list
@@ -85,6 +70,21 @@ This occurred for reaction number: 	4
 label: 	r4
 WARNING: One of the species given in the efficiencies list
 is NOT one of the species in the gas model.
-The efficiency for: 	O2+	 will be skipped.
+The efficiency for: 	NO+	 will be skipped.
+This occurred for reaction number: 	4
+label: 	r4
+WARNING: One of the species given in the efficiencies list
+is NOT one of the species in the gas model.
+The efficiency for: 	e-	 will be skipped.
+This occurred for reaction number: 	4
+label: 	r4
+WARNING: One of the species given in the efficiencies list
+is NOT one of the species in the gas model.
+The efficiency for: 	N+	 will be skipped.
+This occurred for reaction number: 	4
+label: 	r4
+WARNING: One of the species given in the efficiencies list
+is NOT one of the species in the gas model.
+The efficiency for: 	N2+	 will be skipped.
 This occurred for reaction number: 	4
 label: 	r4

@@ -19,11 +19,11 @@ hfmc_facilities_dictionary = {
         "notes"         : "The X2 Expanion Tube in Expansion Mode, Single Driver (free-piston)",
 
         "geometry" : [
-            ("x_driver_start", 0.2568),
+            ("driver-left-location", 0.2568),
             (-0.112, 0.2568), (-0.112, 0.085),
             (-0.011999999999999997, 0.085),
-            (-0.011999999999999997, "D_orifice"),
-            (0.0, "D_orifice"),
+            (-0.011999999999999997, "orifice-diameter"),
+            (0.0, "orifice-diameter"),
             (0, 0.085), (8.575, 0.085),
             (8.598422, 0.08696),
             (8.627994, 0.089496),
