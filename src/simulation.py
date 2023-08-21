@@ -4,6 +4,8 @@
 
 # 3rd party imports
 from copy import deepcopy
+from math import pi
+from matplotlib import pyplot as plt
 
 # hfmc imports
 from hfmc.facilities import *
@@ -148,12 +150,17 @@ class Simulation():
         # Process the geometry... (make substitutions and ensure no perfect steps)
         #
 
+#        plt.plot([pt[0] for pt in self.facility["geometry"]], [pt[1] for pt in self.facility["geometry"]])
+        
 
+        # determien the lenght of the driver and substitute any custom geometry
         self.substituteOrificeGeometry()
         self.substituteDriverLength()
 
-        #this must be run after all geometry is substituted.
+        # this must be run after all geometry substitution is completed
         self.removePerfectSteps()
+        plt.plot([pt[0] for pt in self.facility["geometry"]], [pt[1] for pt in self.facility["geometry"]])
+        plt.show()
 
 
         # 
@@ -187,14 +194,82 @@ class Simulation():
     # Geometry Functionality
     #
 
-    def substituteDriverLength():
+    def substituteDriverLength(self):
+
+        #if the driver is a cold gas driver take the driver lenght from the driver file (L_driver).
+        if self.driver_condition["type"] in ["cold gas"]:
+
+            for (i, coord) in enumerate(self.facility["geometry"]):
+
+                #put the cold driven lenght in
+                if coord[0] == "x_driver_start":
+                    self.facility["geometry"][i] = (self.facility["geometry"][1][0] - L_driver, coord[1])
+
+        #else... calculate the volume of the driver given the piston compression (this method does not consider overdrive)... (moving walls/piston dynamics are a TODO)
+        elif self.driver_condition["type"] in ["free piston"]:
+
+            if "gamma_4_polytropic" in self.driver_condition:
+                gamma = self.driver_condition["gamma_4_polytropic"]
+            else:
+                pass #TODO need to create a gas model and get gamma from it 
+            
+            p_rupt = self.driver_condition["p_4"]
+            p_init = self.driver_condition["p_4i"]
+            T_init = self.driver_condition["T_4i"]
+            v_init = self.driver_condition["V_4i"]
+
+            v_final = v_init / ((p_rupt / p_init) ** (1/gamma))
+
+            for (i, coord) in enumerate(self.facility["geometry"]):
+
+                if coord[0] == "x_driver_start":
+
+                    #put the compressed lenght in at rupture
+                    L_driver = v_final / (pi * (coord[1]/2)**2)
+                    self.facility["geometry"][i] = (self.facility["geometry"][1][0] - L_driver, coord[1])
+
+            if self.driver_condition["T_4"] in ["solve-polytropic", "solve-isentropic"]:
+                #solve either polytropic of isentropic (gamma will be set above based on if either is requested by the user)
+                self.driver_condition["T_4"] = T_init * (p_rupt/p_init)**(1-(1/gamma))
 
         return None
     
-    def substituteOrificeGeometry():
+    def substituteOrificeGeometry(self):
+
+        for (i, coord) in enumerate(self.facility["geometry"]):
+
+            #if the coordinate is a string in teh y postion (D), find the variable with that name and sub it in
+            if type(coord[1]) == str:
+
+                if coord[1] in self.driver_condition:
+                    
+                    self.facility["geometry"][i] = (coord[0], self.driver_condition[coord[1]])
+
+            #same for x pos (if ever needed)
+            if type(coord[0]) == str:
+
+                if coord[0] in self.driver_condition:
+                    
+                    self.facility["geometry"][i] = (self.driver_condition[coord[0]], coord[1])
 
         return None
     
-    def removePerfectSteps():
+    def removePerfectSteps(self):
+
+        cpm = self.facility["eilmer-configuration"]["cpm"]
+        coords = self.facility["geometry"]
+
+        for (i, coord0) in enumerate(coords):
+
+            #get the coord after it
+            if i < (len(coords)-1):
+                coord1 = coords[i+1]
+
+            #are these two coords located in teh same x-position (are they a perfect step)
+            if coord0[0] == coord1[0]:
+                #perturb the current coord the "minimum unit" of 1 cpm (this may not be a good idea, this method needs to be validated)
+                self.facility["geometry"][i] = (self.facility["geometry"][i][1]-1/cpm, self.facility["geometry"][i][0])
+
+
 
         return None
