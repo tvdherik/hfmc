@@ -22,13 +22,13 @@ fill_dictionary = {
 
 chem_model = ["Gupta1990-5sp"]
 
-# create the simulation"He" : 1.0, "Ar" : 0.0
-sim = newSimulation("x2-sim-test", "x2", "expansion-tube", "x2-lwp-2.5mm-100He-0Ar-isentropic", fill_dictionary, chem_model)
+# create the simulation
+sim = newSimulation("x2-sim-test-9kps", "x2", "expansion-tube", "x2-lwp-2.5mm-100He-0Ar-isentropic", fill_dictionary, chem_model)
 
 # initialise the simulation
 sim.initialise()
 
-print(sim.chemicals)
+#print(sim.chemicals)
 
 # execute the simulation
 #sim.execute()

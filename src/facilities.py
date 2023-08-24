@@ -161,7 +161,7 @@ hfmc_facilities_dictionary = {
         },
 
         "eilmer-configuration" : {
-            "cpm" : 40, #cells per meter of spatial 
+            "cpm" : 150, #cells per meter of spatial 
         }
     },
 

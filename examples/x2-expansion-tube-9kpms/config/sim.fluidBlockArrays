@@ -1,0 +1,61 @@
+-- A description of the fluidBlockArrays in Lua code.
+-- Use dofile() to get the content into your interpreter.
+fluidBlockArrays = {
+} -- end fluidBlockArrays
+-- Dictionary of FluidBlockArrays
+fluidBlockArraysDict = {
+} -- end fluidBlockArraysDict
+-- Map from FluidBlock id to FluidBlockArray id
+whichFluidBlockArray = {
+
+
+
+
+
+} -- end whichFluidBlockArray
+-- Map from FluidBlock id to FluidBlockArray label
+whichFluidBlockArrayLabel = {
+
+
+
+
+
+} -- end whichFluidBlockArrayLabel
+-- Dictionary of FluidBlocks
+fluidBlocksDict = {
+ ["FluidBlock-10"]=10,
+ ["FluidBlock-16"]=16,
+ ["FluidBlock-5"]=5,
+ ["FluidBlock-22"]=22,
+ ["FluidBlock-14"]=14,
+ ["FluidBlock-18"]=18,
+ ["FluidBlock-13"]=13,
+ ["FluidBlock-11"]=11,
+ ["FluidBlock-6"]=6,
+ ["FluidBlock-7"]=7,
+ ["FluidBlock-21"]=21,
+ ["FluidBlock-4"]=4,
+ ["FluidBlock-15"]=15,
+ ["FluidBlock-12"]=12,
+ ["FluidBlock-3"]=3,
+ ["FluidBlock-1"]=1,
+ ["FluidBlock-2"]=2,
+ ["FluidBlock-19"]=19,
+ ["FluidBlock-0"]=0,
+ ["FluidBlock-9"]=9,
+ ["FluidBlock-17"]=17,
+ ["FluidBlock-8"]=8,
+ ["FluidBlock-20"]=20,
+} -- end fluidBlocksDict
+function is_in_FluidBlockArray(blkId, label)
+   -- Returns true if a block is in a particular FluidBlockArray.
+   local myfba = whichFluidBlockArrayLabel[blkId]
+   if not myfba then
+      return false
+   end
+   if label == myfba then
+      return true
+   else
+      return false
+   end
+end

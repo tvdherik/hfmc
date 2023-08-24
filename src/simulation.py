@@ -12,6 +12,7 @@ from hfmc.facilities import *
 from hfmc.drivers import *
 from hfmc.pretty import *
 from hfmc.gasmodels import *
+from hfmc.fluid import *
 
 # a small interface function for creating the simulation flass
 def newSimulation(simulation_name, facility, mode, driver_condition, fill_conditions, chemical_models, prove_convergence = False, further_refinement_factors = [], parallelise_refinement_proof = True, exclude_reactions = []):
@@ -105,6 +106,13 @@ class Simulation():
 
     def initialise(self) -> None:
 
+        #
+        # Inform prepartions occuring...
+        #
+
+        inform(f"Initialising simulation, {self.name}", "update")
+
+
         # 
         # Prepare the gas model and chemistry files with the gdtk
         # 
@@ -150,18 +158,19 @@ class Simulation():
         # Process the geometry... (make substitutions and ensure no perfect steps)
         #
 
-#        plt.plot([pt[0] for pt in self.facility["geometry"]], [pt[1] for pt in self.facility["geometry"]])
-        
-
         # determien the lenght of the driver and substitute any custom geometry
         self.substituteOrificeGeometry()
         self.substituteDriverLength()
 
         # this must be run after all geometry substitution is completed
         self.removePerfectSteps()
-        plt.plot([pt[0] for pt in self.facility["geometry"]], [pt[1] for pt in self.facility["geometry"]])
-        plt.show()
 
+        #
+        # Create a function that gives the initial state ID as a function of location
+        #
+
+        FuncStateGivenPosition = self.determineStateGivenPosition()
+        FuncFillNameExpressionGivenID = self.determineFillNameExpressionGivenID()
 
         # 
         # Write the Eilmer simulation
@@ -171,16 +180,34 @@ class Simulation():
         with open("sim.lua", 'w') as sim_file:
         
             #setInitialEilmerConfig(sim_file)
-            #setInitialStates(sim_file)
-
-            #lose structure of block building...
-
-            #for coordinate in geom...
-            #   for (id, coord) enumerate(geometry list of coords)
-            #       gasblock_expression = buildGasBlock(given coord1 and coord2, id)
-            #        writeln(sim_file, gasblock expression)
+            
+            #use the FuncFillNameExpressionGivenID to specify the gas models...
             #
+            # todo (for loop over fill dict and driver dict)
             #
+            
+            #loop to make gasblocks and 
+            self.gasblocks = {}
+            for (block_identity, coord) in enumerate(self.facility["geometry"]):
+
+                if block_identity < (len(self.facility["geometry"])-1):
+                    coord0 = coord
+                    coord1 = self.facility["geometry"][block_identity+1]
+
+                #determine fill condition identity
+                x_centre_gas_block = (coord0[0] + coord1[0])/2
+                fill_identity = FuncStateGivenPosition(x_centre_gas_block)
+
+                #BC
+                boundary_conditions = "" #FuncBoundaryConditionExpressionGivenID(fill_identity)
+
+                #
+                self.gasblocks[block_identity] = GasBlock(block_identity, coord0, coord1, self.facility["eilmer-configuration"]["cpm"], f"state_{fill_identity}", boundary_conditions)
+
+                writeln(sim_file, self.gasblocks[block_identity].get_eilmer_expression())
+                
+
+
 
 
             #setFinalEilmerConfiguation()
@@ -254,22 +281,119 @@ class Simulation():
 
         return None
     
+    #
+    # Ensure no prefect step geometry
+    #
+    
     def removePerfectSteps(self):
 
         cpm = self.facility["eilmer-configuration"]["cpm"]
-        coords = self.facility["geometry"]
+        alternator = -1
 
-        for (i, coord0) in enumerate(coords):
+        for (i, coord0) in enumerate(self.facility["geometry"]):
 
             #get the coord after it
-            if i < (len(coords)-1):
-                coord1 = coords[i+1]
+            if i < (len(self.facility["geometry"])-1):
+                coord1 = self.facility["geometry"][i+1]
 
             #are these two coords located in teh same x-position (are they a perfect step)
             if coord0[0] == coord1[0]:
                 #perturb the current coord the "minimum unit" of 1 cpm (this may not be a good idea, this method needs to be validated)
-                self.facility["geometry"][i] = (self.facility["geometry"][i][1]-1/cpm, self.facility["geometry"][i][0])
+                
+                #ensure we alternate the director of geometry perturbation each time, else strange overlaps can occur for small geomtries (also a remind here to always check sim convergence!)
+                alternator *= -1
 
-
+                if alternator == -1:
+                    self.facility["geometry"][i] = (self.facility["geometry"][i][0]+alternator*1/cpm, self.facility["geometry"][i][1])
+                else:
+                    self.facility["geometry"][i+1] = (self.facility["geometry"][i+1][0]+alternator*1/cpm, self.facility["geometry"][i+1][1])
 
         return None
+    
+    #
+    # Make a function that returns state ID as a function of x
+    #
+
+    def determineStateGivenPosition(self):
+
+        # # determine the start and end of slugs
+        self.slugExtents = []
+
+        #the left extent
+        self.slugExtents.append(self.facility["geometry"][0][0]) #the left extent of all the gometry
+
+        #the diaphragms
+        for element_name in self.mode:
+            element = self.mode[element_name]
+
+            if element["style"] in ["diaphragm"]:
+                self.slugExtents.append(element["location"])
+
+        #the right extent
+        self.slugExtents.append(self.facility["geometry"][-1][0]) #the right extent of all the gometry
+
+        #determien ID between these locations...
+        self.slugInitialIDsMap = [self.mode[element_name]["initial-identity"] for element_name in self.mode if (self.mode[element_name]["style"] in ["driven-tube", "free-piston"])]
+
+        #this method relies on an ordered construction of gasslugs from left to right (which this code does)
+        def Function(x):
+
+            for (i, pos0) in enumerate(self.slugExtents):
+
+                if i < (len(self.slugExtents)-1):
+
+                    pos1 = self.slugExtents[i+1]
+
+                    if (x > pos0) and (x < pos1):
+                        return self.slugInitialIDsMap[i]
+
+        return Function
+    
+    #
+    # 
+    #
+
+    def determineFillNameExpressionGivenID(self):
+
+        def Function(ID):
+
+            if ID not in ["4"]:
+                for element_name in self.mode:
+
+                    if ID in self.mode[element_name]["initial-state"]:
+
+                        p = self.fill_conditions[f"p_{ID}"]
+                        T = self.fill_conditions[f"T_{ID}"]
+                        massf = self.getWholisticMassFracExpressionFromMoleF()
+
+                        gm_gdtk_expression = [
+                            f"state_{ID} = FlowState:new" + "{" + f"p = {p}, T = T_{ID}, massf = {massf}" + "}",
+                            f""
+                            f"",
+
+                        ]
+
+                        return gm_gdtk_expression
+
+                
+            #handle the driver fill/compressed state differently (as it comes from the driver dict not the user-given fill condition dict)
+            else:
+                
+                gm_gdtk_expression = [
+                    "",
+                    ""
+                    "",
+
+                ]   
+
+                return gm_gdtk_expression 
+
+        return Function
+    
+    def getWholisticMassFracExpressionFromMoleF(self, identity):
+
+        
+
+        #mass_frac_gdtk_expression = gm_model.molef2massf( THING )            THING = massf.__str__().replace(":", " =")
+
+        return mass_frac_gdtk_expression

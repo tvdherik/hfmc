@@ -3,7 +3,7 @@
 # Date Updated.... August 4th.
 
 
-#Ex....
+#Example geometry idea
 
 #
 #                      o 
@@ -31,7 +31,7 @@ class GasBlock():
 
         #cells per meter and total number of cells
         self.cpm = cpm
-        self.num_cells = self.cpm * self.lenght
+        self.num_cells = max(1, int(self.cpm * self.lenght)+2)
 
         #initial and boudnary condition handling
         self.initial_condition = initial_condition
@@ -55,17 +55,21 @@ class GasBlock():
         eilmer_expression = [
 
             f"-- block {id}",
-            f"p00_{id} = Vector3:new"+"{"+f"x = {self.x_left}, y = {0.0}"+"}" +"; " + f"p01_{id} = Vector3:new"+"{"+f"x = {self.x_right}, y = {self.R_right}"+"}",
-            f"p11_{id} = Vector3:new"+"{"+f"x = {self.x_left}, y = {self.R_left}"+"}" +"; " + f"p10_{id} = Vector3:new"+"{"+f"x = {self.x_right}, y = {0.0}"+"}",
+            f"p00_{id} = Vector3:new"+"{"+f"x = {self.x_left}, y = {0.0}"+"}" +"; " + f"p01_{id} = Vector3:new"+"{"+f"x = {self.x_left}, y = {self.R_left}"+"}",
+            f"p11_{id} = Vector3:new"+"{"+f"x = {self.x_right}, y = {self.R_right}"+"}" +"; " + f"p10_{id} = Vector3:new"+"{"+f"x = {self.x_right}, y = {0.0}"+"}",
 
             #do this with the grid maker that takes points not lines
 
             #f"patch_{id} = makePatch"+"{"+f"north = {}, south = {}, east = {}, west = {}"+"}",
-            f"patch_{id} = CoonsPatch:new"+"{"+f"p00_{id}, p10_{id}, p11_{id}, p01_{id}"+"}",
+            f"patch_{id} = CoonsPatch:new"+"{"+f"p00 = p00_{id}, p10 = p10_{id}, p11 = p11_{id}, p01 = p01_{id}"+"}",
             f"grid_{id}  = StructuredGrid:new"+"{"+f"psurface = patch_{id}, niv = {self.num_cells}, njv = 2"+"}",
             f"block_{id} = FluidBlock:new"+"{"+f"grid = grid_{id}, initialState = {self.initial_condition}"+"}",
 
         ]
+
+        #nps, nmodes, gm = setGasModel("ideal-air-gas-model.lua")
+
+        #a = FlowState:new{p=1000, T=400, velx=0.0}
 
         eilmer_expression_final = ""
         for line in eilmer_expression:
@@ -73,6 +77,6 @@ class GasBlock():
 
         return eilmer_expression_final
     
-testBlock = GasBlock(1, (0,0.2), (1,0.2), 10, None, None)
-string = testBlock.get_eilmer_expression()
-print(string)
+#testBlock = GasBlock(1, (0,0.2), (1,0.2), 10, None, None)
+#string = testBlock.get_eilmer_expression()
+#print(string)
