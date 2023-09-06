@@ -13,11 +13,11 @@ from hfmc import *
 #the initial/fill conditions...
 fill_dictionary = {
     "T_1" : 300,
-    "p_1" : 3000,
-    "molef_1" : {"N2" : 0.8, "O2" : 0.2},
+    "p_1" : 1800,
+    "molef_1" : {"N2" : 0.78, "O2" : 0.22},
     "T_5" : 300,
-    "p_5" : 3000,
-    "molef_5" : {"N2" : 0.8, "O2" : 0.2},
+    "p_5" : 13.2,
+    "molef_5" : {"N2" : 0.78, "O2" : 0.22},
 }
 
 chem_model = ["Gupta1990-5sp"]

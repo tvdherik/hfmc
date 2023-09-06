@@ -18,7 +18,14 @@
  <PDataArray Name="mu_t" type="Float32" NumberOfComponents="1"/>
  <PDataArray Name="k_t" type="Float32" NumberOfComponents="1"/>
  <PDataArray Name="S" type="Float32" NumberOfComponents="1"/>
- <PDataArray Name="massf[0]-air" type="Float32" NumberOfComponents="1"/>
+ <PDataArray Name="massf[0]-Ar" type="Float32" NumberOfComponents="1"/>
+ <PDataArray Name="massf[1]-He" type="Float32" NumberOfComponents="1"/>
+ <PDataArray Name="massf[2]-N" type="Float32" NumberOfComponents="1"/>
+ <PDataArray Name="massf[3]-N2" type="Float32" NumberOfComponents="1"/>
+ <PDataArray Name="massf[4]-NO" type="Float32" NumberOfComponents="1"/>
+ <PDataArray Name="massf[5]-O" type="Float32" NumberOfComponents="1"/>
+ <PDataArray Name="massf[6]-O2" type="Float32" NumberOfComponents="1"/>
+ <PDataArray Name="dt_chem" type="Float32" NumberOfComponents="1"/>
  <PDataArray Name="u" type="Float32" NumberOfComponents="1"/>
  <PDataArray Name="T" type="Float32" NumberOfComponents="1"/>
  <PDataArray Name="vel.vector" type="Float32" NumberOfComponents="3"/>

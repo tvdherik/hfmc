@@ -47,7 +47,7 @@ class GasBlock():
 
         #
         # p01-------------p11
-        #  |               |
+        #  |               |tube_
         # p00-------------p10
         # 
 
@@ -64,6 +64,8 @@ class GasBlock():
             f"patch_{id} = CoonsPatch:new"+"{"+f"p00 = p00_{id}, p10 = p10_{id}, p11 = p11_{id}, p01 = p01_{id}"+"}",
             f"grid_{id}  = StructuredGrid:new"+"{"+f"psurface = patch_{id}, niv = {self.num_cells}, njv = 2"+"}",
             f"block_{id} = FluidBlock:new"+"{"+f"grid = grid_{id}, initialState = {self.initial_condition}"+"}",
+            f"block_{id}.bcList['north'] = WallBC_NoSlip_FixedT1:new" + "{" + "Twall = 300" + "}",
+            f"block_{id}.bcList['south'] = WallBC_NoSlip_FixedT1:new" + "{" + "Twall = 300" + "}"
 
         ]
 

@@ -69,7 +69,7 @@ hfmc_facilities_dictionary = {
                     "secondary-diaphragm" : {
                         "style" : "diaphragm",
                         "name" : "secondary",
-                        "location" : 2.0
+                        "location" : 3.5
                     },
 
                     "acceleration-tube" : {
@@ -108,7 +108,7 @@ hfmc_facilities_dictionary = {
                     "secondary-diaphragm" : {
                         "style" : "diaphragm",
                         "name" : "secondary",
-                        "location" : 2.0
+                        "location" : 3.5
                     },
                     
                     "shock-tube" : {
@@ -120,7 +120,7 @@ hfmc_facilities_dictionary = {
                     "tertiary-diaphragm" : {
                         "style" : "diaphragm",
                         "name" : "tertiary",
-                        "location" : 3.0
+                        "location" : 5.0
                     },
 
                     "acceleration-tube" : {

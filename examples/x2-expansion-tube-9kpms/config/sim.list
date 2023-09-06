@@ -1,24 +1,24 @@
 # indx type label ncells
-   0 structured_grid FluidBlock-0 11
-   1 structured_grid FluidBlock-1 1
-   2 structured_grid FluidBlock-2 9
+   0 structured_grid FluidBlock-0 16
+   1 structured_grid FluidBlock-1 2
+   2 structured_grid FluidBlock-2 14
    3 structured_grid FluidBlock-3 2
    4 structured_grid FluidBlock-4 2
    5 structured_grid FluidBlock-5 2
-   6 structured_grid FluidBlock-6 857
-   7 structured_grid FluidBlock-7 3
-   8 structured_grid FluidBlock-8 3
-   9 structured_grid FluidBlock-9 4
-  10 structured_grid FluidBlock-10 5
-  11 structured_grid FluidBlock-11 6
-  12 structured_grid FluidBlock-12 7
-  13 structured_grid FluidBlock-13 8
-  14 structured_grid FluidBlock-14 9
-  15 structured_grid FluidBlock-15 11
-  16 structured_grid FluidBlock-16 12
-  17 structured_grid FluidBlock-17 13
-  18 structured_grid FluidBlock-18 15
-  19 structured_grid FluidBlock-19 16
-  20 structured_grid FluidBlock-20 19
-  21 structured_grid FluidBlock-21 15
-  22 structured_grid FluidBlock-22 15
+   6 structured_grid FluidBlock-6 525
+   7 structured_grid FluidBlock-7 762
+   8 structured_grid FluidBlock-8 4
+   9 structured_grid FluidBlock-9 5
+  10 structured_grid FluidBlock-10 6
+  11 structured_grid FluidBlock-11 7
+  12 structured_grid FluidBlock-12 9
+  13 structured_grid FluidBlock-13 10
+  14 structured_grid FluidBlock-14 12
+  15 structured_grid FluidBlock-15 14
+  16 structured_grid FluidBlock-16 16
+  17 structured_grid FluidBlock-17 18
+  18 structured_grid FluidBlock-18 20
+  19 structured_grid FluidBlock-19 22
+  20 structured_grid FluidBlock-20 24
+  21 structured_grid FluidBlock-21 29
+  22 structured_grid FluidBlock-22 22
