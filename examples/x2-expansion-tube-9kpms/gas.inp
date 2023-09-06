@@ -1,6 +1,0 @@
--- 
--- Automatically generated gas file by hfmc. 
--- 
-
-model = "thermally perfect gas"
-species = {'Ar', 'He', 'N', 'N2', 'NO', 'O', 'O2'}

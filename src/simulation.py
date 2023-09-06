@@ -227,6 +227,10 @@ class Simulation():
                 if (centre_of_block > slug_bounds[0]) and (centre_of_block < slug_bounds[1]):
                     block_id_counter += 1
                     self.gasblocks[block_id_counter] = GasBlock(block_id_counter, coord_L, coord_R, self.facility["eilmer-configuration"]["cpm"], f"state_{fill_id}", boundary_conditions)
+                    
+                    
+                    NB: get the diaphragm BC working properly to make sure that's not part of the issue.
+                    then turn chem on!
 
 
         # 

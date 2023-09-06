@@ -1,1 +1,0 @@
-Species database loaded from: 	/home/therik/gdtkinst/data/species-database.lua
